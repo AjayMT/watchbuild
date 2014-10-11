@@ -15,9 +15,10 @@ describe('watchbuild', function () {
     foo: path.join(__dirname, 'out.html'),
     bar: path.join(__dirname, 'out2.html')
   };
+  var watcher;
 
   before(function (done) {
-    wb(infiles, outfiles, marked);
+    watcher = wb(infiles, outfiles, marked);
 
     setTimeout(done, 100);
   });
@@ -41,7 +42,7 @@ describe('watchbuild', function () {
       fs.writeFileSync(bar, oldcontent);
 
       done();
-    }, 50);
+    }, 250);
   });
 
   it('should guess output file names', function () {
@@ -62,5 +63,7 @@ describe('watchbuild', function () {
       if (fs.existsSync(fname))
         fs.unlinkSync(fname);
     }
+
+    watcher.close();
   });
 });
