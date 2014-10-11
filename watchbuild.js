@@ -9,14 +9,13 @@ var chokidar = require('chokidar');
 var glob = require('glob');
 var debug = require('debug')('watchbuild');
 
-var watcher;
-
 // watch: start watching all files that match glob pattern 'infile'
 // 'outfiles' is an object mapping parts of names of input files
 // to output file paths. 'cb' is called every time a file changes,
 // with the file contents and file name as arguments. 'cb' should
 // return the contents of the output file
 function watch (infile, outfiles, cb) {
+  var watcher;
   var infiles = glob.sync(infile);
 
   for (var k in infiles) debug('watching file ' + infiles[k]);

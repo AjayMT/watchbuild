@@ -8,7 +8,7 @@ var should = require('should');
 var marked = require('marked');
 var glob = require('glob');
 
-describe('watchbuild', function () {
+describe('watching globs', function () {
   var wb = require('../watchbuild.js');
   var infiles = path.join(__dirname, '*.md');
   var outfiles = {
