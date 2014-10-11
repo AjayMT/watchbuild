@@ -10,7 +10,7 @@ var glob = require('glob');
 
 describe('watching globs', function () {
   var wb = require('../watchbuild.js');
-  var infiles = path.join(__dirname, '*.md');
+  var infiles = path.join(__dirname, 'test-files', '*.md');
   var outfiles = {
     foo: path.join(__dirname, 'out.html'),
     bar: path.join(__dirname, 'out2.html')
@@ -30,7 +30,7 @@ describe('watching globs', function () {
   });
 
   it('should respond to file changes', function (done) {
-    var bar = path.join(__dirname, 'bar.md');
+    var bar = path.join(__dirname, 'test-files', 'bar.md');
     var oldcontent = fs.readFileSync(bar);
 
     fs.writeFileSync(bar, '`code`');
@@ -46,7 +46,7 @@ describe('watching globs', function () {
   });
 
   it('should guess output file names', function () {
-    var contents = fs.readFileSync(path.join(__dirname, 'baz'),
+    var contents = fs.readFileSync(path.join(__dirname, 'test-files', 'baz'),
                                    { encoding: 'utf-8' });
 
     contents.should.containEql('<code>code</code>');
