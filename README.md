@@ -1,5 +1,7 @@
 
 # watchbuild
+[![Build Status](https://travis-ci.org/AjayMT/watchbuild.svg)](https://travis-ci.org/AjayMT/watchbuild)
+
 watchbuild is a small tool that allows you to watch a set of files and update other files when the original files change.
 
 Here's an example of a tool that automatically converts markdown to HTML, implemented with watchbuild and [marked](http://npmjs.org/marked):
