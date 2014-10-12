@@ -36,8 +36,14 @@ function getOutfile (outfiles, filename) {
 // to output file paths. 'cb' is called every time a file changes,
 // with the file contents and file name as arguments. 'cb' should
 // return the contents of the output file
-function watch (infile, outfiles, cb) {
+function watch (infile, outfiles, options, cb) {
   var infiles = glob.sync(infile);
+
+  if (typeof options === 'function') {
+    cb = options;
+    options = { persistent: true };
+  } else if (options.persistent === undefined)
+    options.persistent = true;
 
   for (var k in infiles) {
     debug('watching file ' + infiles[k]);
@@ -51,7 +57,7 @@ function watch (infile, outfiles, cb) {
   }
 
   if (! watcher || watcher.closed) {
-    watcher = chokidar.watch(infiles[0], { persistent: true });
+    watcher = chokidar.watch(infiles[0], options);
 
     var otherfiles = infiles.slice(1);
     for (var f in otherfiles)
@@ -85,9 +91,15 @@ function watch (infile, outfiles, cb) {
 // is called with three arguments: the concatenated
 // content of all files in the group, the path of the file that
 // changed, and an object mapping file paths to file contents
-function group (inglobs, outfile, cb) {
+function group (inglobs, outfile, options, cb) {
   var infiles = [];
   var groupdata = {};
+
+  if (typeof options === 'function') {
+    cb = options;
+    options = { persistent: true };
+  } else if (options.persistent === undefined)
+    options.persistent = true;
 
   for (var g in inglobs)
     infiles = infiles.concat(glob.sync(inglobs[g]));
@@ -104,7 +116,7 @@ function group (inglobs, outfile, cb) {
   }
 
   if (! groupWatcher || groupWatcher.closed) {
-    groupWatcher = chokidar.watch(infiles[0], { persistent: true });
+    groupWatcher = chokidar.watch(infiles[0], options);
 
     for (var k in infiles)
       groupWatcher.add(infiles[k]);
