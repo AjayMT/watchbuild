@@ -1,6 +1,6 @@
 {
   "name": "watchbuild",
-  "version": "0.0.11",
+  "version": "0.0.2",
   "description": "A small utility that automatically builds things",
   "dependencies": {
     "chokidar": "0.9.0",
