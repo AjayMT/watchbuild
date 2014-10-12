@@ -21,6 +21,7 @@ describe('watching paths', function () {
 
   it('should build files', function () {
     var content = fs.readFileSync(outfile, { encoding: 'utf-8' });
+
     content.should.containEql('<code>code</code>');
   });
 
@@ -40,7 +41,8 @@ describe('watching paths', function () {
   });
 
   after(function () {
-    fs.unlinkSync(outfile);
     watcher.close();
+
+    fs.unlinkSync(outfile);
   });
 });

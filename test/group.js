@@ -15,7 +15,11 @@ describe('watching groups', function () {
   var watcher;
 
   before(function (done) {
-    watcher = wb.group(infiles, outfile, marked);
+    watcher = wb.group(infiles, outfile, function (data) {
+      // this is to avoid marked being called with
+      // other arguments
+      return marked(data);
+    });
 
     setTimeout(done, 100);
   });

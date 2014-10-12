@@ -53,6 +53,8 @@ describe('watching globs', function () {
   });
 
   after(function () {
+    watcher.close();
+
     for (var f in outfiles)
       fs.unlinkSync(outfiles[f]);
 
@@ -63,7 +65,5 @@ describe('watching globs', function () {
       if (fs.existsSync(fname))
         fs.unlinkSync(fname);
     }
-
-    watcher.close();
   });
 });
