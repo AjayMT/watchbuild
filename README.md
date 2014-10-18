@@ -39,7 +39,7 @@ wb('*.md', {             // watch all markdown files in '.'
 
 Note that 'foo.md' and 'bar.md' could be written as just 'foo' and 'bar' or any other part of a file path that uniquely identifies a file.
 
-`transformingFunction` is a function that returns the contents of the output file or a readable stream.It is called with two arguments: the contents of the input file and the path of the input file.
+`transformingFunction` is a function that returns the contents of the output file or a readable stream. It is called with two arguments: the contents of the input file and the path of the input file.
 
 `options` is an optional argument documented below.
 
