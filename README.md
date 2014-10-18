@@ -32,8 +32,8 @@ var marked = require('marked');
 var wb = require('watchbuild');
 
 wb('*.md', {             // watch all markdown files in '.'
-  'foo.md': 'foo.html',  // whenever foo.md changes, foo.html is updated
-  'bar.md': 'bar.html'   // whenever bar.md changes, bar.html is updated
+'foo.md': 'foo.html',  // whenever foo.md changes, foo.html is updated
+'bar.md': 'bar.html'   // whenever bar.md changes, bar.html is updated
 }, marked);
 ```
 
@@ -52,7 +52,7 @@ This function is useful for making things like CSS preprocessor builders: multip
 
 This function returns an instance of [fs.FSWatcher](http://nodejs.org/api/fs.html#fs_class_fs_fswatcher). Every time this function is called, it will not return a new FSWatcher instance; it uses only one instance of FSWatcher, so doing something like closing that watcher will close all file watching operations started with this function.
 
-**Note: ** You *may* run into some issues when using `watchbuild.group` with a `transformingFunction` argument that returns a readable stream. I'm aware of this and working on it, and any help in the form of issues/pull requests is appreciated.
+**Note:** You *may* run into some issues when using `watchbuild.group` with a `transformingFunction` argument that returns a readable stream. I'm aware of this and working on it, and any help in the form of issues/pull requests is appreciated.
 
 ### options
 The options argument is an object that is passed to [chokidar](http://npmjs.org/chokidar), the module watchbuild uses to watch files. These are some of the important options:
