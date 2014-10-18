@@ -39,7 +39,7 @@ wb('*.md', {             // watch all markdown files in '.'
 
 Note that 'foo.md' and 'bar.md' could be written as just 'foo' and 'bar' or any other part of a file path that uniquely identifies a file.
 
-`transformingFunction` is a function that returns the contents of the output file.It is called with two arguments: the contents of the input file and the path of the input file.
+`transformingFunction` is a function that returns the contents of the output file or a readable stream.It is called with two arguments: the contents of the input file and the path of the input file.
 
 `options` is an optional argument documented below.
 
@@ -51,6 +51,8 @@ This is similar to the regular `watchbuild` function, except that `watchbuild.gr
 This function is useful for making things like CSS preprocessor builders: multiple files can be watched and compiled into one single CSS file.
 
 This function returns an instance of [fs.FSWatcher](http://nodejs.org/api/fs.html#fs_class_fs_fswatcher). Every time this function is called, it will not return a new FSWatcher instance; it uses only one instance of FSWatcher, so doing something like closing that watcher will close all file watching operations started with this function.
+
+**Note: ** You *may* run into some issues when using `watchbuild.group` with a `transformingFunction` argument that returns a readable stream. I'm aware of this and working on it, and any help in the form of issues/pull requests is appreciated.
 
 ### options
 The options argument is an object that is passed to [chokidar](http://npmjs.org/chokidar), the module watchbuild uses to watch files. These are some of the important options:

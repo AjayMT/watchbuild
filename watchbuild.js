@@ -35,7 +35,7 @@ function getOutfile (outfiles, filename) {
 // 'outfiles' is an object mapping parts of names of input files
 // to output file paths. 'cb' is called every time a file changes,
 // with the file contents and file name as arguments. 'cb' should
-// return the contents of the output file
+// return the contents of the output file or a readable stream
 function watch (infile, outfiles, options, cb) {
   var infiles = glob.sync(infile);
 
@@ -71,11 +71,15 @@ function watch (infile, outfiles, options, cb) {
       fs.readFile(filename, { encoding: 'utf-8' }, function (err, data) {
         if (err) console.error(err);
         else {
-          fs.writeFile(files[filename].outfile,
-                       files[filename].cb(data, filename), function (err) {
-                         if (err) console.error(err);
-                         else debug('wrote file ' + files[filename].outfile);
-                       });
+          var contents = files[filename].cb(data, filename);
+
+          if (typeof contents === 'string')
+            fs.writeFile(files[filename].outfile, contents, function (err) {
+              if (err) console.error(err);
+              else debug('wrote file ' + files[filename].outfile);
+            });
+          else if (contents.pipe)
+            contents.pipe(fs.createWriteStream(files[filename].outfile));
         }
       });
     });
@@ -138,19 +142,21 @@ function group (inglobs, outfile, options, cb) {
             grpdatacopy[d] = groupdata[d];
           }
 
-          fs.writeFile(groupFiles[filename].outfile,
-                       groupFiles[filename].cb(groupcontent,
-                                               filename, grpdatacopy),
-                       function (err) {
-                         if (err) console.error(err);
-                         else
-                           debug('wrote file ' + groupFiles[filename].outfile);
-                       });
+          var contents = groupFiles[filename].cb(groupcontent, filename,
+                                                 grpdatacopy);
+
+          if (typeof contents === 'string')
+            fs.writeFile(groupFiles[filename].outfile, contents, function (err) {
+              if (err) console.error(err);
+              else
+                debug('wrote file ' + groupFiles[filename].outfile);
+            });
+          else if (contents.pipe)
+            contents.pipe(fs.createWriteStream(groupFiles[filename].outfile));
         }
       });
     });
-  }
-  else
+  } else
     for (var j in infiles)
       groupWatcher.add(infiles[j]);
 
