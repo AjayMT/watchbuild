@@ -1,0 +1,26 @@
+
+{
+  "name": "watchbuild",
+  "version": "0.1.0",
+  "description": "watch files and transform them with streams",
+  "dependencies": {
+    "chokidar": "^1.0.1",
+    "minimatch": "^2.0.7",
+    "through2": "^0.6.5"
+  },
+  "devDependencies": {
+    "marked": "^0.3.3",
+    "mocha": "^2.2.5",
+    "should": "^6.0.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha ./test"
+  },
+  "author": "Ajay MT <ajay.tatachar@gmail.com> (http://ajaymt.github.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/AjayMT/watchbuild.git"
+  }
+}
