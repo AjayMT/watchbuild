@@ -27,10 +27,13 @@ function wb (files, stream) {
       if (minimatch(fp, k))
         outfile = files[k];
 
-    fs.createReadStream(fp)
-    .pipe(stream)
-    .pipe(fs.createWriteStream(outfile));
+    fs.createReadStream(fp).pipe(stream);
+
+    if (outfile !== undefined && outfile !== null)
+      stream.pipe(fs.createWriteStream(outfile));
   });
+
+  return stream;
 }
 
 module.exports = wb;

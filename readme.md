@@ -30,9 +30,11 @@ $ npm install watchbuild
 
 ## API
 ### watchbuild(files, transform)
-`files` is an object mapping glob patterns to output paths.
+`files` is an object mapping glob patterns to output paths. If a file is mapped to `undefined` or `null`, it isn't written anywhere.
 
 `transform` can be a transform stream or a function that takes and returns a string.
+
+This function returns the transform stream so you can `pipe` it to other places.
 
 ## License
 MIT. See `./LICENSE` for details.
