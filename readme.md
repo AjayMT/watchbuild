@@ -1,5 +1,7 @@
 
 # watchbuild
+[![Build Status](https://travis-ci.org/AjayMT/watchbuild.svg?branch=master)](https://travis-ci.org/AjayMT/watchbuild)
+
 Watch files and transform them with streams.
 
 ```javascript
