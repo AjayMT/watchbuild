@@ -7,6 +7,8 @@ var through = require('through2');
 var minimatch = require('minimatch');
 
 function wb (files, stream) {
+  stream = stream();
+
   if (typeof stream === 'function') {
     var fn = stream;
 

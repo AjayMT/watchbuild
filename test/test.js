@@ -12,7 +12,7 @@ describe('watchbuild', function () {
     var files = {};
     files[path.join(__dirname, '*.md')] = path.join(__dirname, 'test.html');
 
-    wb(files, marked);
+    wb(files, function () { return marked; });
 
     setTimeout(done, 1000);
   });

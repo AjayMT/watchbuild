@@ -11,16 +11,18 @@ var through = require('through2');
 
 // convert 'test.md' to html and write the result to 'test.html'
 // whenever 'test.md' it changes
-wb({ './test.md': './test.html' }, marked);
+wb({ './test.md': './test.html' }, function () { return marked; });
 
 // also supports streams
-wb({ './foo.md': './foo.html' }, through(function (buf, _, next) {
-  this.push(marked(buf.toString()));
-  next();
-}));
+wb({ './foo.md': './foo.html' }, function () {
+  return through(function (buf, _, next) {
+    this.push(marked(buf.toString()));
+    next();
+  });
+});
 
 // and globs
-wb({ './*bar.md': 'bar.html', './*foo.md': 'foo.html' }, marked);
+wb({ './*bar.md': 'bar.html', './*foo.md': 'foo.html' }, function () { return marked; });
 ```
 
 ## Installation
@@ -32,7 +34,7 @@ $ npm install watchbuild
 ### watchbuild(files, transform)
 `files` is an object mapping glob patterns to output paths. If a file is mapped to `undefined` or `null`, it isn't written anywhere.
 
-`transform` can be a transform stream or a function that takes and returns a string.
+`transform` can return a transform stream or a function that takes and returns a string.
 
 This function returns the transform stream so you can `pipe` it to other places.
 
