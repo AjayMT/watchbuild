@@ -36,8 +36,6 @@ $ npm install watchbuild
 
 `transform` can return a transform stream or a function that takes and returns a string.
 
-This function returns the transform stream so you can `pipe` it to other places.
-
 ## License
 MIT. See `./LICENSE` for details.
 

@@ -1,7 +1,7 @@
 
 {
   "name": "watchbuild",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "watch files and transform them with streams",
   "dependencies": {
     "chokidar": "^1.0.1",

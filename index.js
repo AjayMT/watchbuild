@@ -7,16 +7,16 @@ var through = require('through2');
 var minimatch = require('minimatch');
 
 function wb (files, stream) {
-  stream = stream();
+  if (typeof stream() === 'function') {
+    var fn = stream();
 
-  if (typeof stream === 'function') {
-    var fn = stream;
+    stream = function () {
+      return through(function (buf, _, next) {
+        this.push(fn(buf.toString()));
 
-    stream = through(function (buf, _, next) {
-      this.push(fn(buf.toString()));
-
-      next();
-    });
+        next();
+      });
+    }
   }
 
   chokidar.watch(Object.keys(files))
@@ -29,13 +29,13 @@ function wb (files, stream) {
       if (minimatch(fp, k))
         outfile = files[k];
 
-    fs.createReadStream(fp).pipe(stream);
+    var strm = stream();
+
+    fs.createReadStream(fp).pipe(strm);
 
     if (outfile !== undefined && outfile !== null)
-      stream.pipe(fs.createWriteStream(outfile));
+      strm.pipe(fs.createWriteStream(outfile));
   });
-
-  return stream;
 }
 
 module.exports = wb;
